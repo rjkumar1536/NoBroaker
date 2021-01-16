@@ -19,7 +19,13 @@ body {
 }
 
 #loader-view {
+    /* display: hidden; */
 }
+
+.hide-loader{
+    display: none;
+}
+
 
 .loader-container {
     flex-direction: column;

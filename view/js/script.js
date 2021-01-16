@@ -2,7 +2,8 @@ const show = document.querySelector('#submit-btn');
 const selected = document.querySelector('#user-select');
 const userName = document.querySelector('#user-name');
 const balance = document.querySelector('#user-balance');
-let data = [];
+
+const loader = document.querySelector('.loader-view');
 
 async function fetchAPI(value , page = 1){
     let res  = await fetch(`https://jsonmock.hackerrank.com/api/transactions?userId=${value}&page=${page}`);
@@ -27,7 +28,7 @@ async function loadData(value){
     let total_balance = 0;
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: 'US',
+        currency: 'USD',
       });
     for(let i = 0; i < data.length; i++){
         var d = new Date(data[i].timestamp);
@@ -37,29 +38,28 @@ async function loadData(value){
         }
         let year = d.getFullYear();
         let key = `${month}-${year}`
-          let str = data[i].amount;
-          str = parseFloat(str.replace(',', '').slice(1));
-        if(obj[key]){
-            obj[key][data[i].txtType] += str;
+        let str = data[i].amount;
+        str = parseFloat(str.replace(',', '').slice(1));
+        if(!obj[key]){
+            obj[key] = {"credit" : 0, "debit" : 0 }
         }
-        else{
-            obj[key] = {credit : 0, debit : 0 }
-            obj[key][data[i].txtType] += str;
-        }
-        if(data[i].txtType == "debit"){
+        obj[key][data[i].txnType] += str;
+        if(data[i].txnType == "debit"){
             total_balance -= str;
         }
         else{
             data[i].txtType += str;
         }
     }
-
-    for(let [key, value] of obj){
+    balance.innerText = `Balance : ${formatter.format(total_balance)}`
+    let values = Object.entries(obj);
+    values.sort((a,b) => a[0] < b[0] ? -1 : 1);
+    for(let [key, value] of values){
         let div = document.createElement('div');
         div.classList.add('statement-card');
         let p1 = document.createElement('p');
         p1.classList.add('monthly-balance');
-        p1.innerText = formatter.format(total_balance);
+        p1.innerText = formatter.format(value.credit - value.debit);
         let p2 = document.createElement('p');
         p2.classList.add('month-year');
         p2.innerText = key;
@@ -75,10 +75,15 @@ async function loadData(value){
         div.append(p4);
         document.querySelector('#monthly-statements').append(div);
     }
+    loader.classList.add('hide-loader');
 }
 show.addEventListener('click', ()=>{
     var value = selected.value;
     if(value != -1){
+        loader.classList.remove('hide-loader');
+        document.querySelector('#monthly-statements').innerHTML = '';
+        userName.innerText = '';
+        balance.innerText = '';
         loadData(value);
     }
 })
