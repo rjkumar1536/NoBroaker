@@ -1,0 +1,28 @@
+{
+  "name": "user-statements",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node app.js",
+    "pretest": "npm install",
+    "test": "NODE_ENV=test PORT=8001 ./node_modules/.bin/mocha test --exit -r jsdom-global/register"
+  },
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "chromedriver": "^78.0.1",
+    "jsdom": "15.2.0",
+    "jsdom-global": "3.0.2",
+    "mocha-multi": "^0.11.0",
+    "webdriverio": "^4.8.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "bluebird": "^3.5.1",
+    "express": "^4.17.1",
+    "mocha": "^3.5.0",
+    "mocha-junit-reporter": "^1.13.0",
+    "mocha-multi-reporters": "^1.1.4",
+    "selenium-webdriver": "^3.6.0"
+  }
+}

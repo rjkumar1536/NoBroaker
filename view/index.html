@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Define title-->
+    <title>User Monthly Bank Statements</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <!--You can load all the css files here -->
+    <link rel="stylesheet" type="text/css" href="css/select.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+<!--HTML content goes here-->
+
+
+<nav class="app-nav">
+    <h1 class="app-title">Monthly Statements</h1>
+</nav>
+
+<div class="content">
+    <section class="flex select-form-container" id="filter-view">
+        <div class="select">
+            <select id="user-select">
+                <option selected disabled value="-1">Select User</option>
+                <option value="1">John Oliver</option>
+                <option value="2">Bob Martin</option>
+                <option value="3">Helena Fernandez</option>
+                <option value="4">Francesco De Mello</option>
+            </select>
+        </div>
+
+        <button type="submit" id="submit-btn">
+            Show
+        </button>
+    </section>
+
+    <div id="loader-view">
+        <section class="loader-container">
+            <span class="loader"></span>
+        </section>
+    </div>
+
+    <section id="statements-view">
+        <div class="user-information">
+            <p id="user-name"></p>
+            <p id="user-balance"></p>
+        </div>
+
+        <div id="monthly-statements">
+
+        </div>
+    </section>
+</div>
+
+<!--You can load all the javascript files here-->
+<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
